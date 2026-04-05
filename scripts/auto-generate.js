@@ -26,6 +26,15 @@ async function generateArticle(keyword) {
   const amazonUrl = `https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}&tag=${AMAZON_TRACKING_ID}`;
   const rakutenUrl = `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(keyword)}/?f=1&af=${RAKUTEN_AFFILIATE_ID}`;
 
+
+  const affiliateInstruction = `
+記事内に以下のアフィリエイトリンクを自然な形で必ず3箇所以上挿入してください：
+- 比較表の直後: [→ Amazonで今すぐ確認する](${amazonLink})
+- 第1位レビューの末尾: [→ 楽天市場で最安値を見る](${rakutenLink})
+- まとめセクション: [→ Amazonで詳細を見る](${amazonLink})
+各リンクの前後に購買を促す一言（「在庫確認はこちら」「公式価格をチェック」等）を入れてください。
+`;
+
   const prompt = `「${keyword}」について、購買意欲を高める高品質な比較記事を日本語で書いてください。
 
 以下の形式でMDXファイルとして出力：
