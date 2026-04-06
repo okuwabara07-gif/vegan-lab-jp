@@ -90,6 +90,11 @@ genre: "${TOPIC}"
 
 （各商品200文字以上）
 
+
+## 関連画像
+
+![関連商品イメージ](https://source.unsplash.com/800x400/?beauty,product,lifestyle)
+
 ## まとめ
 
 （200文字以上）
