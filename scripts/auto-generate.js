@@ -134,7 +134,7 @@ async function main() {
     try {
       console.log('Generating:', keyword);
       const content = await generateArticle(keyword);
-      const filename = `${Date.now()}-${keyword.replace(/[^a-zA-Z0-9\u3040-\u9fff]/g, '-')}.mdx`;
+      const filename = `${Date.now()}-${keyword.replace(/[^a-zA-Z0-9\u3040-\u9fff\u30A0-\u30FF]/g, '-')}.mdx`;
       fs.writeFileSync(path.join(blogDir, filename), content);
       console.log('Saved:', filename);
       await new Promise(r => setTimeout(r, 3000));
