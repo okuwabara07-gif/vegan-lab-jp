@@ -37,6 +37,71 @@ async function getUnsplashImage(keyword) {
   return 'https://source.unsplash.com/800x450/?beauty,cosmetics';
 }
 
+
+// キーワードタイプ定義
+const KEYWORD_PATTERNS = {
+  ranking: (topic) => [
+    `${topic}おすすめランキング`,
+    `${topic}人気ランキング`,
+    `${topic}コスパ最強ランキング`,
+    `${topic}プロおすすめランキング`,
+    `${topic}口コミランキング`,
+  ],
+  question: (topic) => [
+    `${topic}どれがいい`,
+    `${topic}選び方 失敗しない`,
+    `${topic}違いは何`,
+    `${topic}効果ある`,
+    `${topic}初心者 どれ`,
+    `${topic}コスパ 比較`,
+  ],
+  worry: (topic) => [
+    `${topic}効果なかった 原因`,
+    `${topic}失敗した 対処法`,
+    `${topic}やめた理由`,
+    `${topic}デメリット`,
+    `${topic}注意点`,
+  ],
+  howto: (topic) => [
+    `${topic}正しい使い方`,
+    `${topic}始め方 初心者`,
+    `${topic}続け方 コツ`,
+    `${topic}効果的な方法`,
+    `${topic}タイミング いつ`,
+  ],
+  comparison: (topic) => [
+    `${topic}市販 サロン 違い`,
+    `${topic}安い 高い 比較`,
+    `${topic}プチプラ デパコス 比較`,
+    `${topic}国産 海外 比較`,
+  ],
+};
+
+function getKeywords() {
+  const topicBase = TOPIC.split('・')[0];
+  const all = [];
+  Object.values(KEYWORD_PATTERNS).forEach(fn => all.push(...fn(topicBase)));
+  return all;
+}
+
+function getArticleType(keyword) {
+  if (keyword.includes('どれ') || keyword.includes('選び方') || keyword.includes('違い')) return 'question';
+  if (keyword.includes('失敗') || keyword.includes('効果なかった') || keyword.includes('やめた') || keyword.includes('注意')) return 'worry';
+  if (keyword.includes('方法') || keyword.includes('使い方') || keyword.includes('始め方') || keyword.includes('コツ')) return 'howto';
+  if (keyword.includes('比較') || keyword.includes('vs') || keyword.includes('市販')) return 'comparison';
+  return 'ranking';
+}
+
+function getTitleByType(keyword, year, type) {
+  switch(type) {
+    case 'question': return `【${year}年】${keyword}｜プロが本音で答えます`;
+    case 'worry': return `${keyword}を解決｜原因と正しい対処法【${year}年版】`;
+    case 'howto': return `【${year}年最新】${keyword}完全ガイド｜プロが徹底解説`;
+    case 'comparison': return `【${year}年】${keyword}｜違いをプロが徹底比較`;
+    default: return `【${year}年最新】${keyword}おすすめTOP5｜専門家が徹底比較`;
+  }
+}
+
 async function generateArticle(keyword) {
   const year = new Date().getFullYear();
   const amazonUrl = `https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}&tag=${AMAZON_TRACKING_ID}`;
