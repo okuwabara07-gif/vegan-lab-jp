@@ -6,7 +6,7 @@ const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const AMAZON_TRACKING_ID = process.env.AMAZON_TRACKING_ID || 'haircolorab22-22';
 const RAKUTEN_AFFILIATE_ID = process.env.RAKUTEN_AFFILIATE_ID || '5253b9ed.08f9d938.5253b9ee.e71aefe8';
 
-const TOPIC = 'ヴィーガン・植物性・クルエルティフリー';
+const TOPIC = 'ヴィーガン・植物性・クルエルティフリー・オーガニック';
 
 function request(options, body) {
   return new Promise((resolve, reject) => {
